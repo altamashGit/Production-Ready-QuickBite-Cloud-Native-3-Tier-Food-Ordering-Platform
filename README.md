@@ -57,6 +57,9 @@ flowchart TB
 
 <img width="935" height="486" alt="Screenshot 2026-09-18 164657" src="https://github.com/user-attachments/assets/99076ed2-1c9b-44fe-901b-d185ae00db2f" />
 
+<img width="956" height="503" alt="Screenshot 2026-09-19 032519" src="https://github.com/user-attachments/assets/9b965341-4921-4650-90a5-f5462a7df3af" />
+
+
 ## UI of Application
 
 <img width="938" height="491" alt="Screenshot 2026-09-19 020600" src="https://github.com/user-attachments/assets/bfa7050c-935f-4171-985e-7091d3905739" />
@@ -224,6 +227,9 @@ The Docker healthcheck uses this endpoint to determine whether the backend is re
 
 ### Grafana
 <img width="944" height="503" alt="Screenshot 2026-09-18 163243" src="https://github.com/user-attachments/assets/32f711d3-6bc6-4298-bf22-54752095b52d" />
+
+### Prometheus
+<img width="956" height="489" alt="Screenshot 2026-09-19 032257" src="https://github.com/user-attachments/assets/5897c0c8-848a-4d3e-a28e-555ff1075b65" />
 
 
 The current Compose environment includes:
