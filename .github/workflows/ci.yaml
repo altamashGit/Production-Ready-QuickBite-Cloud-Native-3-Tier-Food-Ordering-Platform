@@ -35,30 +35,66 @@ jobs:
 
  ## ********* BAckend TEST ***************##
 
-  backend-test:
-    name: backend Test
-    runs-on: ubuntu-latest
+  # backend-test:
+  #   name: backend Test
+  #   runs-on: ubuntu-latest
 
-    defaults:
-      run: 
-        working-directory: backend
+  #   defaults:
+  #     run: 
+  #       working-directory: backend
     
-    steps:
-      - name: Checkout Repositroy
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout Repositroy
+  #       uses: actions/checkout@v4
 
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #         cache-dependency-path: ./package-lock.json
+
+  #     - name: Install dependencies
+  #       run: npm ci
+
+  #     - name: Run tests
+  #       run: node --check server.js
+  #       continue-on-error: false
+
+  backend-test:
+    name: Backend Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+ 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache-dependency-path: ./package-lock.json
-
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+ 
       - name: Install dependencies
         run: npm ci
-
-      - name: Run tests
+ 
+      - name: Syntax check
         run: node --check server.js
-        continue-on-error: false
+ 
+      # These run only if the scripts exist in backend/package.json
+      - name: Lint
+        run: npm run lint --if-present
+ 
+      - name: Unit tests
+        run: npm test --if-present
+ 
+      - name: Dependency audit (high+ severity, prod deps)
+        run: npm audit --omit=dev --audit-level=high
 
 ## ***** Docker hadolint ***** ##
 
