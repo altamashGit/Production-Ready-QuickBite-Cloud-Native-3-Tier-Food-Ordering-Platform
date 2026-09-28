@@ -30,7 +30,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}   
-          GITHUB_TOKEN: ${{ secrets.DOCKERHUB_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       
 
 
@@ -148,7 +148,7 @@ jobs:
 
 ## Scaning Image with Critical severity
       - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.3
+        uses: aquasecurity/setup-trivy@v0.2.4
 
       - name: Scan backend image
         run: |
@@ -184,7 +184,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build backend image
         run: |
