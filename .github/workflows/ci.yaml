@@ -29,8 +29,7 @@ jobs:
       - name: Run GitLeaks Scan
         uses: gitleaks/gitleaks-action@v2
         env:
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}   
-          GITHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
       
 
 
@@ -148,7 +147,8 @@ jobs:
 
 ## Scaning Image with Critical severity
       - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.4
+        uses: aquasecurity/setup-trivy@v0.36.0
+
 
       - name: Scan backend image
         run: |
