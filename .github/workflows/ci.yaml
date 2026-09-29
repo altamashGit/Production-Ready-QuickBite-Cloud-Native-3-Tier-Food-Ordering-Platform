@@ -165,6 +165,9 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Set up Buildx          
+        uses: docker/setup-buildx-action@v3
 
       - name: Build image (local, cached)
         uses: docker/build-push-action@v6
