@@ -235,7 +235,7 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
-pipeline-summary:
+  pipeline-summary:
     name: "📊 Pipeline Report"
     runs-on: ubuntu-latest
     timeout-minutes: 5
