@@ -259,8 +259,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ matrix.name }}
-          provenance: mode=max
-          sbom: true
+          # provenance: mode=max
+          # sbom: true
 
 # This stage is for that this docker image is proof of this repo
 
