@@ -234,3 +234,41 @@ jobs:
           subject-name: index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/quickbite-${{ matrix.name }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+pipeline-summary:
+    name: "📊 Pipeline Report"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: always()
+    needs: [secret-scan, backend-test, dockerfile-lint, security_scan, build-and-push]
+    steps:
+      - name: 📊 Write report
+        env:
+          R_SECRET: ${{ needs.secret-scan.result }}
+          R_BACKEND: ${{ needs.backend-test.result }}
+          R_LINT: ${{ needs.dockerfile-lint.result }}
+          R_SCAN: ${{ needs.security_scan.result }}
+          R_PUSH: ${{ needs.build-and-push.result }}
+        run: |
+          icon() {
+            case "$1" in
+              success)   echo "✅ passed" ;;
+              failure)   echo "❌ failed" ;;
+              cancelled) echo "⚪ cancelled" ;;
+              skipped)   echo "⏭️ skipped" ;;
+              *)         echo "❔ $1" ;;
+            esac
+          }
+          {
+            echo "## 🚀 QuickBite CI · Pipeline Report"
+            echo ""
+            echo "**Branch:** \`${GITHUB_REF_NAME}\` · **Commit:** \`${GITHUB_SHA::7}\` · **By:** @${GITHUB_ACTOR}"
+            echo ""
+            echo "| Stage | Job | Result |"
+            echo "|---|---|---|"
+            echo "| 1 · Checks | 🔐 Secret Scan | $(icon "$R_SECRET") |"
+            echo "| 1 · Checks | 🧪 Backend Test | $(icon "$R_BACKEND") |"
+            echo "| 1 · Checks | 🧹 Dockerfile Lint | $(icon "$R_LINT") |"
+            echo "| 2 · Security | 🐳 Build & Trivy Scan | $(icon "$R_SCAN") |"
+            echo "| 3 · Release | 🚀 Push to Docker Hub | $(icon "$R_PUSH") |"
+          } >> "$GITHUB_STEP_SUMMARY"
