@@ -180,7 +180,7 @@ jobs:
 # Report everything (HIGH+CRITICAL) to the Security tab without failing
 
       - name: Trivy report (SARIF)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/setup-trivy@v0.3.1
         with:
           image-ref: quickbite-${{ matrix.name }}:scan
           format: sarif
@@ -199,7 +199,7 @@ jobs:
  # Gate: fail the build on fixable CRITICAL vulnerabilities
 
       - name: Trivy gate (fail on CRITICAL)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/setup-trivy@v0.3.1
         with:
           image-ref: quickbite-${{ matrix.name }}:scan
           format: table
