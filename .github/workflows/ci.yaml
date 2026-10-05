@@ -1,7 +1,10 @@
 name: CI Pipeline
 on:
   push:
-    branches: feature/ci-cd
+    branches:
+      - feature/ci-cd
+    paths-ignore:
+      - 'k8s/**'
 
 concurrency:
   group: quickbite-ci-${{ github.workflow }}-${{ github.ref }}
@@ -272,3 +275,6 @@ jobs:
             echo "| 2 · Security | 🐳 Build & Trivy Scan | $(icon "$R_SCAN") |"
             echo "| 3 · Release | 🚀 Push to Docker Hub | $(icon "$R_PUSH") |"
           } >> "$GITHUB_STEP_SUMMARY"
+
+
+          
